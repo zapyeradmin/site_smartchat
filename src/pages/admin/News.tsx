@@ -503,7 +503,10 @@ const News = () => {
                         variant="outline"
                         size="sm"
                         className="hover:bg-blue-50"
-                        onClick={() => window.open(`/noticias/${article.slug}`, '_blank')}
+                        onClick={() => {
+                          const url = import.meta.env.PROD ? `#/noticias/${article.slug}` : `/noticias/${article.slug}`
+                          window.open(url, '_blank')
+                        }}
                       >
                         <Eye className="h-4 w-4 mr-1" />
                         Ver
