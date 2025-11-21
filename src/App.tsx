@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NewsPage from "./pages/NewsPage";
 import NewsDetail from "./pages/NewsDetail";
@@ -24,7 +24,26 @@ const App = () => (
       <div className="min-h-screen bg-background">
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        {(import.meta as any).env.PROD ? (
+          <HashRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/noticias" element={<NewsPage />} />
+              <Route path="/noticias/:slug" element={<NewsDetail />} />
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="clients" element={<Clients />} />
+                <Route path="deals" element={<Deals />} />
+                <Route path="tasks" element={<Tasks />} />
+                <Route path="news" element={<News />} />
+                <Route path="integrations" element={<Integrations />} />
+                <Route path="settings" element={<Settings />} />
+              </Route>
+            </Routes>
+          </HashRouter>
+        ) : (
+          <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/noticias" element={<NewsPage />} />
@@ -40,7 +59,8 @@ const App = () => (
               <Route path="settings" element={<Settings />} />
             </Route>
           </Routes>
-        </BrowserRouter>
+          </BrowserRouter>
+        )}
       </div>
     </TooltipProvider>
   </QueryClientProvider>
