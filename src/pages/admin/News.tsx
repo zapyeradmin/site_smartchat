@@ -130,7 +130,7 @@ const News = () => {
         });
         if (newsData.status === 'published') {
           try {
-            const apiBase = import.meta.env.VITE_API_BASE_URL || ''
+            const apiBase = import.meta.env.DEV ? 'http://localhost:3001' : (import.meta.env.VITE_API_BASE_URL || '')
             await fetch(`${apiBase}/api/newsletter/news-created`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -151,7 +151,7 @@ const News = () => {
         });
         if (newsData.status === 'published') {
           try {
-            const apiBase = import.meta.env.VITE_API_BASE_URL || ''
+            const apiBase = import.meta.env.DEV ? 'http://localhost:3001' : (import.meta.env.VITE_API_BASE_URL || '')
             await fetch(`${apiBase}/api/newsletter/news-created`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -260,7 +260,7 @@ const News = () => {
 
   const resendNewsletter = async (slug: string) => {
     try {
-      const apiBase = import.meta.env.VITE_API_BASE_URL || ''
+      const apiBase = import.meta.env.DEV ? 'http://localhost:3001' : (import.meta.env.VITE_API_BASE_URL || '')
       await fetch(`${apiBase}/api/newsletter/news-created`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -4,7 +4,7 @@
 
 ![Smart Chat](https://raw.githubusercontent.com/zapyeradmin/site_smartchat/main/public/favicon.ico)
 
-**Plataforma de atendimento inteligente da Zapyer para unificar conversas e automações com IA**
+**Plataforma de atendimento inteligente da Zapyer para unificar conversas e automações**
 
 [🔗 Repositório](https://github.com/zapyeradmin/site_smartchat) • [🌐 App](https://smartchat.zapyer.com.br) • [🛠️ API](https://apismartchat.zapyer.com.br)
 
@@ -32,7 +32,7 @@
 
 ## Visão Geral
 
-O Site Smart Chat apresenta a plataforma de atendimento inteligente da Zapyer, focada em integrar WhatsApp, IA (ChatGPT/Gemini) e automações com Flowbuilder. Possui formulário CTA que registra prospects na tabela `clients` (Supabase) com `status = prospect`, e botões de planos com mensagens prontas via WhatsApp.
+O Site Smart Chat apresenta a plataforma de atendimento inteligente da Zapyer, focada em integrar WhatsApp e automações com Flowbuilder. Possui formulário CTA que registra prospects na tabela `clients` (Supabase) com `status = prospect`, e botões de planos com mensagens prontas via WhatsApp.
 
 ### 🎯 Propósito
 
@@ -55,9 +55,8 @@ Unificar atendimento via WhatsApp e web com automações inteligentes (IA + Flow
 - CTA com fallback de chamada para API (`src/components/cta/MultiStepCTA.tsx:109-132`).
 - E-mail marketing em Markdown (`src/assets/email-smart-chat.md`) com placeholders `{nome}`.
 
-### IA e experiência
+### Experiência
 
-- Flowbuilder, ChatGPT/Gemini integráveis.
 - UI moderna com Tailwind, shadcn/ui e Radix.
 
 ### 📊 Analytics & Reporting
@@ -297,11 +296,12 @@ public/
 
 - Boas-vindas automáticas ao assinar:
   - Endpoint `POST /api/newsletter/welcome` (HTML com header gradiente, logo CID, footer com links úteis).
-  - Conteúdo baseado em `src/assets/email-automatico-newsletter-zapyer-noticias.md` com formatação de parágrafos e lista.
+  - Conteúdo baseado em `apps/backend/assets/email-automatico-newsletter-zapyer-noticias.md` com formatação de parágrafos e lista.
 
 - Nova notícia automática para assinantes:
   - Endpoint `POST /api/newsletter/news-created` envia e-mail de "Nova Notícia" para todos os assinantes `status=active`.
   - Conteúdo baseado em `src/assets/email-automatico-nova-noticia-newsletter-zapyer-noticias.md`, incluindo:
+    - Arquivo movido para `apps/backend/assets/email-automatico-nova-noticia-newsletter-zapyer-noticias.md`.
     - Imagem destacada 16:9 (`featured_image`), título centralizado, resumo justificado e botão "Leia a Notícia" para `https://smartchat.zapyer.com.br/noticias/:slug`.
   - Registro de envios em `public.newsletter_sends` (migration: `supabase/migrations/20251121_create_newsletter_sends_table.sql`).
   - Reenvio manual no Admin: botão "Reenviar" em `src/pages/admin/News.tsx` (apenas para publicadas).
@@ -383,19 +383,28 @@ Instale:
 
 ### Primeiros passos
 
-1. **Explore the interface**: Navigate through different sections
-2. **Test the chat**: Interact with the AI trading assistant
-3. **Check responsiveness**: Test on different screen sizes
-4. **Review components**: Examine the component library in `/src/components/ui/`
+1. **Explore a interface**: Navegue pelas seções
+2. **Teste responsividade**: Verifique em diferentes tamanhos de tela
+3. **Revise componentes**: Examine a biblioteca em `/src/components/ui/`
 
 ---
 
 ## Variáveis de Ambiente
 
-Frontend (build local):
+Frontend (ambiente local):
 
 ```env
 VITE_API_BASE_URL=http://localhost:3001
+VITE_WHATSAPP_NUMBER=5587996316081
+VITE_SUPABASE_URL=<url do supabase>
+VITE_SUPABASE_ANON_KEY=<anon key do supabase>
+```
+
+Frontend (produção – Hostinger):
+
+```env
+VITE_APP_BASE_URL=https://smartchat.zapyer.com.br
+VITE_API_BASE_URL=https://apismartchat.zapyer.com.br
 VITE_WHATSAPP_NUMBER=5587996316081
 VITE_SUPABASE_URL=<url do supabase>
 VITE_SUPABASE_ANON_KEY=<anon key do supabase>
@@ -555,25 +564,48 @@ const MyComponent = () => {
 
 ### Subdomínios e SSL
 
-- A `smartchat.zapyer.com.br` → `212.85.8.199`
-- A `apismartchat.zapyer.com.br` → `212.85.8.199`
+- `smartchat.zapyer.com.br` → IP do servidor
+- `apismartchat.zapyer.com.br` → IP do servidor
 - Ative SSL para ambos e force HTTPS.
 
 ### Frontend (app)
 
 - `npm run build`
-- Upload do conteúdo de `dist/` para o diretório do subdomínio do app (ex.: `public_html/smartchat/`).
+- Publique o conteúdo de `dist/` no diretório do subdomínio (ex.: `public_html/smartchat/`).
 
 ### Backend (API Node)
 
-- hPanel → “Aplicativos Node.js” com entry `server/dev-api.js`.
+- hPanel → “Aplicativos Node.js” com entry `apps/backend/server.js`.
 - Defina variáveis de ambiente (Supabase e SMTP).
+- Configure `ALLOWED_ORIGIN=https://smartchat.zapyer.com.br`.
 - Domínio da aplicação: `apismartchat.zapyer.com.br`.
+
+Backend (VPS Hostinger – Nginx + PM2):
+
+- Instale Node.js, Nginx e PM2
+- Inicie a API: `npm run start:api`
+- Nginx (exemplo):
+```
+server {
+  listen 443 ssl;
+  server_name apismartchat.zapyer.com.br;
+  ssl_certificate /etc/letsencrypt/live/apismartchat.zapyer.com.br/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/apismartchat.zapyer.com.br/privkey.pem;
+  location / {
+    proxy_pass http://127.0.0.1:3001;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+  }
+}
+```
 
 ### Verificação
 
 - App: `https://smartchat.zapyer.com.br`
 - API: `POST https://apismartchat.zapyer.com.br/api/register-prospect`
+- Newsletter: `POST https://apismartchat.zapyer.com.br/api/newsletter/subscribe`
 
 ### 🔧 Build Configuration
 
@@ -600,25 +632,25 @@ The build process includes:
 
 ### Cadastro de prospect
 
-- `POST /api/register-prospect` (`server/dev-api.js:21`)
+- `POST /api/register-prospect` (`apps/backend/server.js:22`)
 - Body: `{ name, email, phone, company, notes?, status? }`
 - Grava em `clients` (Supabase) e envia e-mail com `src/assets/email-smart-chat.md`.
 
 ### Assinatura da Newsletter
 
-- `POST /api/newsletter/welcome` (`server/dev-api.js:138`)
+- `POST /api/newsletter/subscribe` (`apps/backend/server.js:375`)
 - Body: `{ email }`
-- Busca template `src/assets/email-automatico-newsletter-zapyer-noticias.md`, formata HTML, envia com Nodemailer.
+- Busca template `apps/backend/assets/email-automatico-newsletter-zapyer-noticias.md`, formata HTML, envia com Nodemailer.
 
 ### Nova Notícia para assinantes
 
-- `POST /api/newsletter/news-created` (`server/dev-api.js:296`)
+- `POST /api/newsletter/news-created` (`apps/backend/server.js:462`)
 - Body: `{ slug }`
 - Obtém notícia em `news_admin`, monta e‑mail com imagem 16:9, título, resumo e botão "Leia a Notícia"; envia para assinantes ativos e registra em `newsletter_sends`.
 
 ### Compartilhamento com preview
 
-- `GET /share/noticias/:slug` (`server/dev-api.js:64`)
+- `GET /share/noticias/:slug` (`apps/backend/server.js:147`)
 - Gera metatags OG/Twitter (imagem, título, descrição) e redireciona para `/noticias/:slug`.
 
 ### Como validar os envios
@@ -693,21 +725,22 @@ The build process includes:
 ## Licença
 
 Zapyer © Todos os direitos reservados.
+## Checklist de Deploy
 
+- Frontend
+  - Definir `VITE_APP_BASE_URL` e `VITE_API_BASE_URL`
+  - `npm run build` e publicar `dist/`
+  - Servidor web com fallback SPA (`try_files $uri $uri/ /index.html;`)
 
-- **Q1-Q2 2023**: Core platform development
-- **Q3 2023**: Advanced features and AI integration
-- **Q4 2023**: Beta testing and security audit
-- **Q1 2024**: Public launch and continuous improvements
+- Backend
+  - Executar `npm run start:api` (ou PM2)
+  - Variáveis: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `GMAIL_USER`, `GMAIL_APP_PASSWORD`, `ALLOWED_ORIGIN`
+  - Proxy reverso (Nginx) para o processo Node
 
-### 🎯 Upcoming Features
+- Supabase
+  - Rodar migrations: `20251121_create_newsletter_table.sql` e `20251121_create_newsletter_sends_table.sql`
 
-- **Mobile App**: Native iOS and Android applications
-- **Advanced Analytics**: Enhanced reporting and insights
-- **Social Trading**: Copy trading and social features
-- **API Expansion**: Public API for third-party integrations
-- **White-label Solution**: Customizable platform for partners
-
----
-
-*Last updated: $(date +'%Y-%m-%d')*
+- Testes pós‑deploy
+  - `POST /api/newsletter/subscribe` com e‑mail de teste
+  - Publicar notícia e verificar envio automático + registro em `newsletter_sends`
+  - Enviar formulário CTA e validar e‑mail padronizado

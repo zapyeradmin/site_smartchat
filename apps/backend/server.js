@@ -20,7 +20,6 @@ if (!supabaseUrl || !serviceRoleKey) {
 const supabase = createClient(supabaseUrl, serviceRoleKey)
 
 app.post('/api/register-prospect', async (req, res) => {
-  try {
     const { name, email, phone, company, notes, status } = req.body || {}
     console.log('[dev-api] incoming body', req.body)
     if (!name || !email || !phone || !company) return res.status(400).send('Invalid data')
@@ -143,14 +142,9 @@ app.post('/api/register-prospect', async (req, res) => {
     await transporter.sendMail({ from: process.env.GMAIL_USER, to: email, subject, html: htmlCTA, attachments: [{ filename: 'zapyer-hub-logo.png', content: logoContentCTA, cid: 'smartchat-logo' }] })
 
     res.json({ success: true, client: data })
-  } catch (err) {
-    console.error('[dev-api] unknown error', err)
-    res.status(500).json({ error: err?.message || 'Unknown error' })
-  }
 })
 
 app.get('/share/noticias/:slug', async (req, res) => {
-  try {
     const slug = req.params.slug
     const { data, error } = await supabase
       .from('news_admin')
@@ -217,10 +211,6 @@ app.get('/share/noticias/:slug', async (req, res) => {
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8')
     res.send(html)
-  } catch (err) {
-    console.error('[share/noticias] unknown error', err)
-    res.status(500).send('<!doctype html><html><head><meta charset="utf-8"><title>Erro</title></head><body>Erro interno</body></html>')
-  }
 })
 
 // Rota para newsletter - envio de email de boas-vindas
@@ -233,7 +223,7 @@ app.post('/api/newsletter/welcome', async (req, res) => {
     }
 
     // Ler o template de email
-    const mdPath = path.resolve(process.cwd(), 'src', 'assets', 'email-automatico-newsletter-zapyer-noticias.md')
+    const mdPath = path.resolve(process.cwd(), 'apps', 'backend', 'assets', 'email-automatico-newsletter-zapyer-noticias.md')
     const mdRaw = await fs.readFile(mdPath, 'utf8')
     
     // Extrair assunto e conteúdo
@@ -347,7 +337,7 @@ app.post('/api/newsletter/welcome', async (req, res) => {
     }
 
     // Enviar email
-    const logoPath = path.resolve(process.cwd(), 'src', 'assets', 'zapyer-hub-logo.png')
+const logoPath = path.resolve(process.cwd(), 'src', 'assets', 'zapyer-hub-logo.png')
     const logoContent = await fs.readFile(logoPath)
     const mailOptions = {
       from: `"Smart Chat Newsletter" <${smtpUser || process.env.GMAIL_USER}>`,
@@ -397,7 +387,7 @@ app.post('/api/newsletter/subscribe', async (req, res) => {
       return res.status(500).json({ error: 'Erro ao cadastrar', details: upsertError.message })
     }
 
-    const mdPath = path.resolve(process.cwd(), 'src', 'assets', 'email-automatico-newsletter-zapyer-noticias.md')
+const mdPath = path.resolve(process.cwd(), 'apps', 'backend', 'assets', 'email-automatico-newsletter-zapyer-noticias.md')
     const mdRaw = await fs.readFile(mdPath, 'utf8')
     const subjectMatch = mdRaw.match(/^\*\*Assunto:\*\*\s*(.+)$/m)
     const subject = subjectMatch ? subjectMatch[1] : 'Bem-vindo(a) à Newsletter do Smart Chat Notícias! 📰'
@@ -453,8 +443,14 @@ app.post('/api/newsletter/subscribe', async (req, res) => {
       return res.status(500).json({ error: 'SMTP não configurado' })
     }
 
-    const logoPath = path.resolve(process.cwd(), 'src', 'assets', 'zapyer-hub-logo.png')
-    const logoContent = await fs.readFile(logoPath)
+    let logoContent
+    try {
+      const logoPathBackend = path.resolve(process.cwd(), 'apps', 'backend', 'assets', 'zapyer-hub-logo.png')
+      logoContent = await fs.readFile(logoPathBackend)
+    } catch {
+      const logoPathSrc = path.resolve(process.cwd(), 'src', 'assets', 'zapyer-hub-logo.png')
+      logoContent = await fs.readFile(logoPathSrc)
+    }
     const info = await transporter.sendMail({
       from: `"Smart Chat Newsletter" <${smtpUser || process.env.GMAIL_USER}>`,
       to: email,
@@ -490,7 +486,7 @@ app.post('/api/newsletter/news-created', async (req, res) => {
       return res.status(400).json({ error: 'Notícia não está publicada' })
     }
 
-    const mdPath = path.resolve(process.cwd(), 'src', 'assets', 'email-automatico-nova-noticia-newsletter-zapyer-noticias.md')
+    const mdPath = path.resolve(process.cwd(), 'apps', 'backend', 'assets', 'email-automatico-nova-noticia-newsletter-zapyer-noticias.md')
     const mdRaw = await fs.readFile(mdPath, 'utf8')
 
     const subjectMatch = mdRaw.match(/^\*\*Assunto:\*\*\s*(.+)$/m)
@@ -596,8 +592,14 @@ app.post('/api/newsletter/news-created', async (req, res) => {
       return res.status(500).json({ error: 'SMTP não configurado' })
     }
 
-    const logoPath = path.resolve(process.cwd(), 'src', 'assets', 'zapyer-hub-logo.png')
-    const logoContent = await fs.readFile(logoPath)
+    let logoContent
+    try {
+      const logoPathBackend = path.resolve(process.cwd(), 'apps', 'backend', 'assets', 'zapyer-hub-logo.png')
+      logoContent = await fs.readFile(logoPathBackend)
+    } catch {
+      const logoPathSrc = path.resolve(process.cwd(), 'src', 'assets', 'zapyer-hub-logo.png')
+      logoContent = await fs.readFile(logoPathSrc)
+    }
 
     const { data: subscribers, error: subsErr } = await supabase
       .from('newsletter')

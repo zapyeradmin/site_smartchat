@@ -41,7 +41,7 @@ export const NewsletterSignup: React.FC<NewsletterSignupProps> = ({
     try {
       // Assinar via backend e enviar email de boas-vindas
       try {
-        const apiBase = import.meta.env.VITE_API_BASE_URL || ''
+        const apiBase = import.meta.env.DEV ? 'http://localhost:3001' : (import.meta.env.VITE_API_BASE_URL || '')
         const response = await fetch(`${apiBase}/api/newsletter/subscribe`, {
           method: 'POST',
           headers: {

@@ -29,7 +29,6 @@ import { FeaturesSection } from "@/components/features/FeaturesSection";
 import { PricingSection } from "@/components/pricing/PricingSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import Footer from "@/components/Footer";
-import { SmartChatAssistant } from "@/components/SmartChatAssistant";
 import { VideoPlayer } from "@/components/ui/video-thumbnail-player";
 import FAQSection from "@/components/FAQSection";
 import { NewsSection } from "@/components/news/NewsSection";
@@ -266,8 +265,6 @@ const Index = (): JSX.Element => {
         <Footer />
       </div>
 
-      {/* Smart Chat Assistant */}
-      <SmartChatAssistant />
     </div>
   );
 };
