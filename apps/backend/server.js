@@ -130,7 +130,7 @@ app.post('/api/register-prospect', async (req, res) => {
           <span style="color:#4b5563;">•</span>
           <a href="${appBaseCTA}/noticias" style="color:#93c5fd;text-decoration:none;">Notícias</a>
           <span style="color:#4b5563;">•</span>
-          <a href="${appBaseCTA}/newsletter/descadastrar?email=${encodeURIComponent(email)}" style="color:#fca5a5;text-decoration:none;">Descadastrar</a>
+          <a href="${appBaseCTA}/#/newsletter/descadastrar?email=${encodeURIComponent(email)}" style="color:#fca5a5;text-decoration:none;">Descadastrar</a>
         </div>
         <hr style="border:none;border-top:1px solid #1f2937;margin:28px 0;">
         <p style="font-size:13px;color:#9ca3af;text-align:center;margin:0;">Smart Chat | Atendimento Inteligente de verdade. 🚀</p>
@@ -167,7 +167,7 @@ app.get('/share/noticias/:slug', async (req, res) => {
       .replace(/[^\w)]*$/, '') + (source ? '…' : '')
 
     const appBase = 'https://smartchat.zapyer.com.br'
-    const canonicalUrl = `${appBase}/noticias/${slug}`
+    const canonicalUrl = `${appBase}/#/noticias/${slug}`
     const rawImage = data.featured_image || '/placeholder.svg'
     const imageUrl = /^(https?:)?\/\//.test(rawImage) ? rawImage : `${appBase}${rawImage}`
     const publishedAt = data.published_at || data.created_at
@@ -290,11 +290,11 @@ app.post('/api/newsletter/welcome', async (req, res) => {
           Você está recebendo este email porque assinou a nossa newsletter.
         </div>
         <div style="margin-top:16px;display:flex;justify-content:center;gap:16px;font-size:13px;">
-          <a href="https://smartchat.zapyer.com.br" style="color:#93c5fd;text-decoration:none;">Site</a>
+          <a href="https://smartchat.zapyer.com.br/#/" style="color:#93c5fd;text-decoration:none;">Site</a>
           <span style="color:#4b5563;">•</span>
-          <a href="https://smartchat.zapyer.com.br/noticias" style="color:#93c5fd;text-decoration:none;">Notícias</a>
+          <a href="https://smartchat.zapyer.com.br/#/noticias" style="color:#93c5fd;text-decoration:none;">Notícias</a>
           <span style="color:#4b5563;">•</span>
-          <a href="${appBase}/newsletter/descadastrar?email=${email}" style="color:#fca5a5;text-decoration:none;">Descadastrar</a>
+          <a href="${appBase}/#/newsletter/descadastrar?email=${email}" style="color:#fca5a5;text-decoration:none;">Descadastrar</a>
         </div>
         <hr style="border:none;border-top:1px solid #1f2937;margin:28px 0;">
         <p style="font-size:13px;color:#9ca3af;text-align:center;margin:0;">Smart Chat | Atendimento Inteligente de verdade. 🚀</p>
@@ -420,7 +420,7 @@ const mdPath = path.resolve(process.cwd(), 'apps', 'backend', 'assets', 'email-a
           <span style="color:#4b5563;">•</span>
           <a href="${appBase}/noticias" style="color:#93c5fd;text-decoration:none;">Notícias</a>
           <span style="color:#4b5563;">•</span>
-          <a href="${appBase}/newsletter/descadastrar?email=${encodeURIComponent(email)}" style="color:#fca5a5;text-decoration:none;">Descadastrar</a>
+          <a href="${appBase}/#/newsletter/descadastrar?email=${encodeURIComponent(email)}" style="color:#fca5a5;text-decoration:none;">Descadastrar</a>
         </div>
         <hr style="border:none;border-top:1px solid #1f2937;margin:28px 0;">
         <p style="font-size:13px;color:#9ca3af;text-align:center;margin:0;">Smart Chat | Atendimento Inteligente de verdade. 🚀</p>
@@ -493,7 +493,7 @@ app.post('/api/newsletter/news-created', async (req, res) => {
     const subject = subjectMatch ? subjectMatch[1] : `Nova Notícia no Smart Chat Notícias! 📰`
 
   const appBase = 'https://smartchat.zapyer.com.br'
-  const canonicalUrl = `${appBase}/noticias/${article.slug}`
+    const canonicalUrl = `${appBase}/#/noticias/${article.slug}`
     const rawImage = article.featured_image || '/placeholder.svg'
     const imageUrl = /^(https?:)?\/\//.test(rawImage) ? rawImage : `${appBase}${rawImage}`
     const source = (article.excerpt && article.excerpt.trim().length > 0) ? article.excerpt : (article.content || '')
@@ -556,11 +556,11 @@ app.post('/api/newsletter/news-created', async (req, res) => {
         </div>
         <hr style="border:none;border-top:1px solid #1f2937;margin:28px 0;">
         <div style="margin-top:16px;display:flex;justify-content:center;gap:16px;font-size:13px;">
-          <a href="${appBase}" style="color:#93c5fd;text-decoration:none;">Site</a>
+          <a href="${appBase}/#/" style="color:#93c5fd;text-decoration:none;">Site</a>
           <span style="color:#4b5563;">•</span>
-          <a href="${appBase}/noticias" style="color:#93c5fd;text-decoration:none;">Notícias</a>
+          <a href="${appBase}/#/noticias" style="color:#93c5fd;text-decoration:none;">Notícias</a>
           <span style="color:#4b5563;">•</span>
-          <a href="${appBase}/newsletter/descadastrar?email={{email}}" style="color:#fca5a5;text-decoration:none;">Descadastrar</a>
+          <a href="${appBase}/#/newsletter/descadastrar?email={{email}}" style="color:#fca5a5;text-decoration:none;">Descadastrar</a>
         </div>
         <hr style="border:none;border-top:1px solid #1f2937;margin:28px 0;">
         <p style="font-size:13px;color:#9ca3af;text-align:center;margin:0;">Smart Chat | Atendimento Inteligente de verdade. 🚀</p>

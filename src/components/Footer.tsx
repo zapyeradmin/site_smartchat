@@ -64,7 +64,7 @@ const Footer = () => {
               <h4 className="font-medium">Atalhos</h4>
               <ul className="space-y-2">
                 <li>
-                  <a href="/noticias" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  <a href="#/noticias" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                     Últimas Notícias
                   </a>
                 </li>
