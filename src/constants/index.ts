@@ -1,13 +1,13 @@
 /**
  * ============================================================================
- * CRYPTO TRADING PLATFORM - APPLICATION CONSTANTS
+ * SITE SMART CHAT - APPLICATION CONSTANTS
  * ============================================================================
  * 
  * This file contains all application constants including configuration,
  * API endpoints, feature flags, and other static values used throughout
  * the application.
  * 
- * @author CryptoTrade Development Team
+ * @author Zapyer Team
  * @version 1.0.0
  * @created 2024
  * ============================================================================
@@ -20,12 +20,12 @@
  */
 
 export const APP_CONFIG = {
-  NAME: 'CryptoTrade',
+  NAME: 'Site Smart Chat',
   VERSION: '1.0.0',
-  DESCRIPTION: 'Advanced crypto trading platform with AI-powered analytics',
-  AUTHOR: 'CryptoTrade Team',
-  CONTACT_EMAIL: 'contact@cryptotrade.com',
-  SUPPORT_EMAIL: 'support@cryptotrade.com',
+  DESCRIPTION: 'Plataforma de atendimento inteligente com IA e integrações WhatsApp',
+  AUTHOR: 'Zapyer',
+  CONTACT_EMAIL: 'info@zapyer.com.br',
+  SUPPORT_EMAIL: 'suporte@zapyer.com.br',
 } as const;
 
 /**
@@ -35,9 +35,9 @@ export const APP_CONFIG = {
  */
 
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'https://api.cryptotrade.com',
+  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'https://apismartchat.zapyer.com.br',
   VERSION: 'v1',
-  TIMEOUT: 30000, // 30 seconds
+  TIMEOUT: 30000,
   RETRY_ATTEMPTS: 3,
 } as const;
 
@@ -244,11 +244,11 @@ export const SUCCESS_MESSAGES = {
  */
 
 export const SOCIAL_LINKS = {
-  TWITTER: 'https://twitter.com/cryptotrade',
-  LINKEDIN: 'https://linkedin.com/company/cryptotrade',
-  GITHUB: 'https://github.com/cryptotrade',
-  DISCORD: 'https://discord.gg/cryptotrade',
-  TELEGRAM: 'https://t.me/cryptotrade',
+  TWITTER: 'https://x.com/MZapyer34353',
+  LINKEDIN: 'https://www.linkedin.com/company/zapyer',
+  GITHUB: 'https://github.com/zapyeradmin',
+  DISCORD: '',
+  TELEGRAM: '',
 } as const;
 
 /**

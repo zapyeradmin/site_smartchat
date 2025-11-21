@@ -5,7 +5,7 @@
  * 
  * Additional TypeScript utility types for better type safety across the app
  * 
- * @author CryptoTrade Development Team
+ * @author Zapyer Team
  * @version 1.0.0
  * ============================================================================
  */

@@ -15,7 +15,8 @@ import { useState, useEffect } from "react";
 const NewsDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const [copySuccess, setCopySuccess] = useState(false);
+  const [copyPreviewSuccess, setCopyPreviewSuccess] = useState(false);
+  const [copyDirectSuccess, setCopyDirectSuccess] = useState(false);
   
   const { data: news, isLoading: newsLoading, error: newsError } = useNewsBySlug(slug || "");
   const { data: relatedNews = [], isLoading: relatedLoading } = useRelatedNews(
@@ -70,45 +71,56 @@ const NewsDetail = () => {
   }
 
   const currentUrl = window.location.href;
+  const shareUrl = `${import.meta.env.VITE_API_BASE_URL || 'https://apismartchat.zapyer.com.br'}/share/noticias/${slug}`;
   const shareText = `${news.title} - ${news.excerpt}`;
 
   const handleShareWhatsApp = () => {
-    const text = encodeURIComponent(`${shareText}\n\n${currentUrl}`);
+    const text = encodeURIComponent(`${shareText}\n\n${shareUrl}`);
     window.open(`https://wa.me/?text=${text}`, '_blank');
   };
 
   const handleShareFacebook = () => {
-    const url = encodeURIComponent(currentUrl);
+    const url = encodeURIComponent(shareUrl);
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
   };
 
   const handleShareTwitter = () => {
     const text = encodeURIComponent(shareText);
-    const url = encodeURIComponent(currentUrl);
+    const url = encodeURIComponent(shareUrl);
     window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
   };
 
   const handleShareEmail = () => {
     const subject = encodeURIComponent(news.title);
-    const body = encodeURIComponent(`${shareText}\n\nLeia mais em: ${currentUrl}`);
+    const body = encodeURIComponent(`${shareText}\n\nLeia mais em: ${shareUrl}`);
     window.open(`mailto:?subject=${subject}&body=${body}`);
   };
 
-  const handleCopyLink = async () => {
+  const handleCopyPreviewLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopyPreviewSuccess(true);
+      toast.success("Link com preview copiado!");
+      setTimeout(() => setCopyPreviewSuccess(false), 2000);
+    } catch {
+      toast.error("Erro ao copiar o link com preview");
+    }
+  };
+
+  const handleCopyDirectLink = async () => {
     try {
       await navigator.clipboard.writeText(currentUrl);
-      setCopySuccess(true);
-      toast.success("Link copiado com sucesso!");
-      setTimeout(() => setCopySuccess(false), 2000);
-    } catch (error) {
-      toast.error("Erro ao copiar o link");
+      setCopyDirectSuccess(true);
+      toast.success("Link direto copiado!");
+      setTimeout(() => setCopyDirectSuccess(false), 2000);
+    } catch {
+      toast.error("Erro ao copiar o link direto");
     }
   };
 
   const handleShareInstagram = () => {
-    // Instagram doesn't have direct sharing, so we copy the link and show instructions
-    handleCopyLink();
-    toast.info("Link copiado! Cole nos seus stories do Instagram");
+    handleCopyPreviewLink();
+    toast.info("Link com preview copiado! Cole nos seus stories do Instagram");
   };
 
   return (
@@ -198,13 +210,21 @@ const NewsDetail = () => {
                     <Mail className="w-4 h-4 text-gray-500" />
                     E-mail
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleCopyLink} className="gap-2 cursor-pointer">
-                    {copySuccess ? (
+                  <DropdownMenuItem onClick={handleCopyPreviewLink} className="gap-2 cursor-pointer">
+                    {copyPreviewSuccess ? (
                       <Check className="w-4 h-4 text-primary" />
                     ) : (
                       <Copy className="w-4 h-4 text-primary" />
                     )}
-                    {copySuccess ? "Copiado!" : "Copiar link"}
+                    {copyPreviewSuccess ? "Preview copiado!" : "Copiar link com preview"}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleCopyDirectLink} className="gap-2 cursor-pointer">
+                    {copyDirectSuccess ? (
+                      <Check className="w-4 h-4 text-primary" />
+                    ) : (
+                      <Copy className="w-4 h-4 text-primary" />
+                    )}
+                    {copyDirectSuccess ? "Direto copiado!" : "Copiar link da notícia"}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

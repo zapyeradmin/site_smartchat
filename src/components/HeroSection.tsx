@@ -7,6 +7,7 @@ import { InfiniteSlider } from '@/components/ui/infinite-slider'
 import { ProgressiveBlur } from '@/components/ui/progressive-blur'
 import { BinaryRain } from '@/components/ui/binary-rain'
 import { useToast } from '@/hooks/use-toast'
+import { NewsletterSignup } from '@/components/NewsletterSignup'
 
 const transitionVariants = {
     item: {
@@ -29,46 +30,6 @@ const transitionVariants = {
 }
 
 export const HeroSection = memo(function HeroSection() {
-    const [email, setEmail] = useState('')
-    const [isSubmitting, setIsSubmitting] = useState(false)
-    const { toast } = useToast()
-
-    const handleNewsletterSubmit = useCallback(async (e: React.FormEvent) => {
-        e.preventDefault()
-        
-        if (!email || !email.includes('@')) {
-            toast({
-                title: "Email inválido",
-                description: "Por favor, insira um email válido.",
-                variant: "destructive",
-            })
-            return
-        }
-
-        setIsSubmitting(true)
-        
-        try {
-            // Simular envio da newsletter
-            await new Promise(resolve => setTimeout(resolve, 1000))
-            
-            toast({
-                title: "Sucesso!",
-                description: "Você foi inscrito na nossa newsletter.",
-                variant: "default",
-            })
-            
-            setEmail('')
-        } catch (error) {
-            toast({
-                title: "Erro",
-                description: "Ocorreu um erro ao processar sua inscrição.",
-                variant: "destructive",
-            })
-        } finally {
-            setIsSubmitting(false)
-        }
-    }, [email, toast])
-
     return (
         <main className="overflow-hidden">
             <section className="relative bg-cover bg-center" style={{ backgroundImage: "url(/lovable-uploads/background-smartchat.png)" }}>
@@ -100,43 +61,12 @@ export const HeroSection = memo(function HeroSection() {
                                 Seja parceiro de um ecossistema digital que une comunicação, inteligência artificial, gestão e vendas em soluções integradas, ajudando sua empresa a inovar, simplificar processos e crescer de forma inteligente e sustentável.
                             </p>
 
-                            <form onSubmit={handleNewsletterSubmit} className="mt-12 mx-auto max-w-md">
-                                <div className="bg-background has-[input:focus]:ring-ring relative grid grid-cols-[1fr_auto] pr-1.5 items-center rounded-full border border-border shadow-lg has-[input:focus]:ring-2 transition-all duration-300 hover:shadow-xl lg:pr-0">
-                                    <Mail className="pointer-events-none absolute inset-y-0 left-4 my-auto size-4 text-muted-foreground" />
-
-                                    <input
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="Assine nossa Newsletter Grátis"
-                                        className="h-12 w-full bg-transparent pl-12 text-foreground placeholder:text-muted-foreground focus:outline-none"
-                                        type="email"
-                                        required
-                                        disabled={isSubmitting}
-                                        aria-label="Email para newsletter"
-                                    />
-
-                                    <div className="md:pr-1.5 lg:pr-0">
-                                        <Button
-                                            type="submit"
-                                            disabled={isSubmitting}
-                                            aria-label="Assinar newsletter"
-                                            size="sm"
-                                            className="rounded-full button-gradient h-12 px-6 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
-                                            {isSubmitting ? (
-                                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                                            ) : (
-                                                <>
-                                                    <span className="hidden md:block">Assinar</span>
-                                                    <SendHorizonal
-                                                        className="relative mx-auto size-5 md:hidden"
-                                                        strokeWidth={2}
-                                                    />
-                                                </>
-                                            )}
-                                        </Button>
-                                    </div>
-                                </div>
-                            </form>
+                            <div className="mt-12 mx-auto max-w-md">
+                                <NewsletterSignup 
+                                    placeholder="Assine nossa Newsletter Grátis"
+                                    buttonText="Assinar"
+                                />
+                            </div>
 
                             <div
                                 aria-hidden

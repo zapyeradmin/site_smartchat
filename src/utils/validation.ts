@@ -1,12 +1,12 @@
 /**
  * ============================================================================
- * CRYPTO TRADING PLATFORM - VALIDATION UTILITIES
+ * SITE SMART CHAT - VALIDATION UTILITIES
  * ============================================================================
  * 
  * This file contains validation utilities for forms, user input, and data
  * processing to ensure data integrity and user experience.
  * 
- * @author CryptoTrade Development Team
+ * @author Zapyer Team
  * @version 1.0.0
  * @created 2024
  * ============================================================================

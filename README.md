@@ -1,82 +1,71 @@
-# 🚀 CryptoTrade - Advanced Crypto Trading Platform
+# Site Smart Chat
 
 <div align="center">
 
-![CryptoTrade Logo](https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=100&h=100&auto=format&fit=crop&ixlib=rb-4.0.3)
+![Smart Chat](https://raw.githubusercontent.com/zapyeradmin/site_smartchat/main/public/favicon.ico)
 
-**A modern, secure, and AI-powered cryptocurrency trading platform built with cutting-edge technologies**
+**Plataforma de atendimento inteligente da Zapyer para unificar conversas e automações com IA**
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/cryptotrade/platform)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Security](https://img.shields.io/badge/security-audited-brightgreen.svg)](docs/SECURITY.md)
-[![Performance](https://img.shields.io/badge/performance-A+-brightgreen.svg)](docs/PERFORMANCE.md)
-
-[🔗 Live Demo](https://cryptotrade.lovable.app) • [📚 Documentation](docs/) • [🛠️ API Reference](docs/API.md) • [🔐 Security](docs/SECURITY.md)
+[🔗 Repositório](https://github.com/zapyeradmin/site_smartchat) • [🌐 App](https://smartchat.zapyer.com.br) • [🛠️ API](https://apismartchat.zapyer.com.br)
 
 </div>
 
 ---
 
-## 📋 Table of Contents
+## Sumário
 
-- [🌟 Overview](#-overview)
-- [✨ Key Features](#-key-features)
-- [🛡️ Security Features](#️-security-features)
-- [🏗️ Architecture](#️-architecture)
-- [🛠️ Technology Stack](#️-technology-stack)
-- [📁 Project Structure](#-project-structure)
-- [🚀 Quick Start](#-quick-start)
-- [⚙️ Configuration](#️-configuration)
-- [🔧 Development](#-development)
-- [🧪 Testing](#-testing)
-- [🚀 Deployment](#-deployment)
-- [📈 Performance](#-performance)
-- [🔒 Security Guidelines](#-security-guidelines)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
+- [Visão Geral](#visão-geral)
+- [Principais Recursos](#principais-recursos)
+- [Arquitetura](#arquitetura)
+- [Variáveis de Ambiente](#variáveis-de-ambiente)
+- [Endpoints da API](#endpoints-da-api)
+- [WhatsApp nos Planos](#whatsapp-nos-planos)
+- [Setup e Desenvolvimento](#setup-e-desenvolvimento)
+- [Deploy na Hostinger](#deploy-na-hostinger)
+- [Admin](#admin)
+- [Solução de Problemas](#solução-de-problemas)
+- [Checklist Pós-Deploy](#checklist-pós-deploy)
+- [Segurança](#segurança)
+- [Licença](#licença)
 
 ---
 
-## 🌟 Overview
+## Visão Geral
 
-CryptoTrade is a comprehensive cryptocurrency trading platform designed to democratize access to professional-grade trading tools. Built with modern web technologies and a security-first approach, the platform provides real-time market data, AI-powered analytics, advanced charting, and risk management tools.
+O Site Smart Chat apresenta a plataforma de atendimento inteligente da Zapyer, focada em integrar WhatsApp, IA (ChatGPT/Gemini) e automações com Flowbuilder. Possui formulário CTA que registra prospects na tabela `clients` (Supabase) com `status = prospect`, e botões de planos com mensagens prontas via WhatsApp.
 
-### 🎯 Mission Statement
+### 🎯 Propósito
 
-To empower traders of all levels with institutional-quality tools, real-time analytics, and AI-driven insights while maintaining the highest standards of security and user experience.
+Unificar atendimento via WhatsApp e web com automações inteligentes (IA + Flowbuilder), captando leads com CTA e integrando-os ao CRM (Supabase) para relacionamento, vendas e suporte.
 
-### 👥 Target Audience
+### 👥 Público-alvo
 
-- **Retail Traders**: Individual investors seeking professional trading tools
-- **Institutional Clients**: Companies requiring white-label solutions
-- **Crypto Enthusiasts**: Users wanting advanced market analysis
-- **Professional Traders**: Experienced traders needing sophisticated features
+- **PMEs e equipes de vendas** que atendem pelo WhatsApp
+- **Suporte ao cliente** que precisa centralizar conversas e automações
+- **Agências e parceiros** que desejam oferecer atendimento com IA
+- **Times internos** buscando produtividade e organização no fluxo de atendimento
 
 ---
 
-## ✨ Key Features
+## Principais Recursos
 
-### 🔄 Core Trading Features
+### Integrações e automação
 
-- **Real-time Market Data**: Live price feeds from major exchanges
-- **Advanced Charting**: Professional-grade technical analysis tools
-- **Multi-Exchange Support**: Trade across multiple cryptocurrency exchanges
-- **Portfolio Management**: Comprehensive asset tracking and analytics
-- **Risk Management**: Automated stop-loss, take-profit, and position sizing
+- Mensagens WhatsApp parametrizadas por plano (`src/constants/index.ts:260-268`).
+- CTA com fallback de chamada para API (`src/components/cta/MultiStepCTA.tsx:109-132`).
+- E-mail marketing em Markdown (`src/assets/email-smart-chat.md`) com placeholders `{nome}`.
 
-### 🤖 AI-Powered Features
+### IA e experiência
 
-- **Intelligent Trading Signals**: AI-generated buy/sell recommendations
-- **Market Analysis**: Automated technical and sentiment analysis
-- **Risk Assessment**: AI-powered risk scoring and recommendations
-- **Chat Assistant**: 24/7 AI trading assistant for support and insights
+- Flowbuilder, ChatGPT/Gemini integráveis.
+- UI moderna com Tailwind, shadcn/ui e Radix.
 
 ### 📊 Analytics & Reporting
 
-- **Performance Metrics**: Detailed trading performance analysis
-- **Custom Dashboards**: Personalized trading interfaces
-- **Historical Data**: Access to comprehensive market history
-- **Export Capabilities**: Download reports in various formats
+- **Métricas de atendimento**: Tempo de resposta, taxa de conversão
+- **Painéis personalizados**: Acompanhamento de leads e tarefas
+- **Histórico de dados**: Conversas e interações com clientes
+- **Exportação**: Relatórios e listas de leads em diversos formatos
 
 ### 🎨 User Experience
 
@@ -87,14 +76,12 @@ To empower traders of all levels with institutional-quality tools, real-time ana
 
 ---
 
-## 🛡️ Security Features
+## Segurança
 
-### 🔐 Authentication & Authorization
+### Boas práticas
 
-- **Multi-Factor Authentication (MFA)**: Enhanced account security
-- **JWT Token Management**: Secure session handling
-- **Role-Based Access Control (RBAC)**: Granular permissions system
-- **Session Management**: Automatic timeout and refresh
+- Não expor segredos no frontend; usar hPanel para variáveis do backend.
+- `.env` ignorado pelo Git (`.gitignore`) e não deve ser versionado.
 
 ### 🛡️ Data Protection
 
@@ -119,9 +106,9 @@ To empower traders of all levels with institutional-quality tools, real-time ana
 
 ---
 
-## 🏗️ Architecture
+## Arquitetura
 
-### 🖥️ Frontend Architecture
+### Frontend
 
 ```mermaid
 graph TB
@@ -147,7 +134,7 @@ graph TB
     N --> Q[CSRF Protection]
 ```
 
-### 🔄 Data Flow Architecture
+### Fluxo de dados
 
 ```mermaid
 sequenceDiagram
@@ -169,7 +156,7 @@ sequenceDiagram
     C-->>U: UI Update
 ```
 
-### 🏛️ Component Architecture
+### Componentes
 
 - **Atomic Design Principles**: Components organized by complexity
 - **Separation of Concerns**: Clear distinction between UI and business logic
@@ -178,7 +165,7 @@ sequenceDiagram
 
 ---
 
-## 🛠️ Technology Stack
+## Stack Tecnológico
 
 ### 💻 Frontend Technologies
 
@@ -221,7 +208,7 @@ sequenceDiagram
 
 ---
 
-## 📁 Project Structure
+## Estrutura do Projeto
 
 ```
 src/
@@ -247,12 +234,6 @@ public/
 ├── 📁 lovable-uploads/    # User-uploaded assets
 ├── 📄 favicon.ico         # Site favicon
 └── 📄 index.html          # HTML template
-
-docs/
-├── 📄 SECURITY.md         # Security documentation
-├── 📄 API.md              # API documentation
-├── 📄 DEPLOYMENT.md       # Deployment guide
-└── 📄 CONTRIBUTING.md     # Contribution guidelines
 ```
 
 ### 📋 Component Organization
@@ -273,7 +254,7 @@ docs/
 
 ---
 
-## 📝 Atualizações e Implementações Recentes
+## Atualizações recentes
 
 - Mobile-first aplicado às páginas de notícias:
   - Detalhe (`src/pages/NewsDetail.tsx`): tipografia otimizada para mobile, espaçamentos mais compactos, imagem destacada com cantos arredondados e sombra, conteúdo com `prose-base` no mobile e grid responsivo para "Notícias relacionadas".
@@ -293,7 +274,7 @@ docs/
 - Rotas e preview para validação:
   - Lista de notícias: `/noticias`.
   - Detalhe de notícia: `/noticias/:slug` (ex.: `/noticias/como-fazer-seu-primeiro-trade`).
-  - Servidor de desenvolvimento: `http://localhost:8083/`.
+  - Servidor de desenvolvimento: `http://localhost:8080/`.
 - Observação conhecida:
   - Pode ocorrer `net::ERR_NAME_NOT_RESOLVED` ao carregar `https://fonts.geist-ui.dev/font.css` no preview. Este aviso não afeta funcionalidade; caso necessário, substitua ou remova a importação da fonte externa.
 - Como validar as mudanças:
@@ -306,6 +287,38 @@ docs/
   - `src/pages/NewsPage.tsx`
   - `src/components/news/NewsCard.tsx`
   - `src/components/Footer.tsx`
+
+### Newsletter, E-mails e Compartilhamento
+
+- Assinatura de Newsletter:
+  - Componente `src/components/NewsletterSignup.tsx` criado e integrado ao Hero (`src/components/HeroSection.tsx`).
+  - Usa Supabase no frontend via `@/integrations/supabase/client`.
+  - Tabela `public.newsletter` criada (migration: `supabase/migrations/20251121_create_newsletter_table.sql`) com `email`, `status`, `subscribed_at` e RLS para permitir inserts anônimos.
+
+- Boas-vindas automáticas ao assinar:
+  - Endpoint `POST /api/newsletter/welcome` (HTML com header gradiente, logo CID, footer com links úteis).
+  - Conteúdo baseado em `src/assets/email-automatico-newsletter-zapyer-noticias.md` com formatação de parágrafos e lista.
+
+- Nova notícia automática para assinantes:
+  - Endpoint `POST /api/newsletter/news-created` envia e-mail de "Nova Notícia" para todos os assinantes `status=active`.
+  - Conteúdo baseado em `src/assets/email-automatico-nova-noticia-newsletter-zapyer-noticias.md`, incluindo:
+    - Imagem destacada 16:9 (`featured_image`), título centralizado, resumo justificado e botão "Leia a Notícia" para `https://smartchat.zapyer.com.br/noticias/:slug`.
+  - Registro de envios em `public.newsletter_sends` (migration: `supabase/migrations/20251121_create_newsletter_sends_table.sql`).
+  - Reenvio manual no Admin: botão "Reenviar" em `src/pages/admin/News.tsx` (apenas para publicadas).
+
+- Padronização de layout dos e-mails:
+  - E-mail do CTA (`POST /api/register-prospect`) agora segue o mesmo layout (header gradiente, logo, parágrafos e lista, footer com links).
+  - Formatação do markdown `src/assets/email-smart-chat.md` em blocos com parágrafos e `<ul><li>`.
+
+- Compartilhamento com preview (Open Graph / Twitter Card):
+  - `GET /share/noticias/:slug` gera metatags OG/Twitter e redireciona para a SPA.
+
+- Ajustes de thumbnails no Index:
+  - `src/pages/Index.tsx`: thumbnails locais para "Dashboard de Alta Performance", "Apresentação do Smart Chat" e "Ferramentas do Smart Chat".
+
+- Correções:
+  - Import de `SendHorizonal` em `src/pages/admin/News.tsx`.
+  - Remoção de cliente Supabase duplicado (`src/lib/supabase.ts` removido); uso unificado de `@/integrations/supabase/client`.
 
 ### 📒 Registro desta sessão (Tarefas / Google Calendar)
 
@@ -327,22 +340,22 @@ docs/
   - Componente de integração (inativo): `src/components/tasks/GoogleCalendarIntegration.tsx`
 
 
-## 🚀 Quick Start
+## Setup e Desenvolvimento
 
-### ⚡ Prerequisites
+### Pré-requisitos
 
-Before you begin, ensure you have the following installed:
+Instale:
 
-- **Node.js** (v18.0.0 or higher)
-- **npm** (v8.0.0 or higher) or **yarn** (v1.22.0 or higher)
-- **Git** (for cloning the repository)
+- Node.js 18+
+- npm 8+
+- Git
 
-### 🛠️ Installation
+### Instalação
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/cryptotrade/platform.git
-   cd platform
+   git clone https://github.com/zapyeradmin/site_smartchat.git
+   cd site_smartchat
    ```
 
 2. **Install dependencies**
@@ -368,7 +381,7 @@ Before you begin, ensure you have the following installed:
 5. **Open your browser**
    Navigate to `http://localhost:8080`
 
-### 🎯 First Steps
+### Primeiros passos
 
 1. **Explore the interface**: Navigate through different sections
 2. **Test the chat**: Interact with the AI trading assistant
@@ -377,29 +390,26 @@ Before you begin, ensure you have the following installed:
 
 ---
 
-## ⚙️ Configuration
+## Variáveis de Ambiente
 
-### 🌍 Environment Variables
-
-Create a `.env.local` file in the root directory:
+Frontend (build local):
 
 ```env
-# API Configuration
-VITE_API_BASE_URL=https://api.cryptotrade.com
-VITE_API_VERSION=v1
+VITE_API_BASE_URL=http://localhost:3001
+VITE_WHATSAPP_NUMBER=5587996316081
+VITE_SUPABASE_URL=<url do supabase>
+VITE_SUPABASE_ANON_KEY=<anon key do supabase>
+```
 
-# Feature Flags
-VITE_ENABLE_CHAT=true
-VITE_ENABLE_ANALYTICS=true
-VITE_ENABLE_BLOG=true
+Backend (Hostinger hPanel → Aplicativos Node.js):
 
-# Security Configuration
-VITE_CSRF_TOKEN_NAME=csrf_token
-VITE_RATE_LIMIT_WINDOW=900000
-
-# External Services
-VITE_ANALYTICS_ID=your-analytics-id
-VITE_SENTRY_DSN=your-sentry-dsn
+```env
+SUPABASE_URL=<url do supabase>
+SUPABASE_SERVICE_ROLE_KEY=<service role key>
+GMAIL_USER=<email remetente>
+GMAIL_APP_PASSWORD=<senha de app gmail>
+# opcional
+ALLOWED_ORIGIN=https://smartchat.zapyer.com.br
 ```
 
 ### 🎨 Theme Configuration
@@ -429,11 +439,11 @@ Customize the theme in `src/index.css`:
 
 ---
 
-## 🔧 Development
+## Desenvolvimento
 
 ### 📝 Code Style
 
-We use a consistent code style enforced by ESLint and Prettier:
+Estilo de código com ESLint e Prettier:
 
 ```bash
 # Run linting
@@ -541,94 +551,29 @@ const MyComponent = () => {
 
 ---
 
-## 🧪 Testing
+## Deploy na Hostinger
 
-### 🔍 Testing Strategy
+### Subdomínios e SSL
 
-Our testing approach includes:
+- A `smartchat.zapyer.com.br` → `212.85.8.199`
+- A `apismartchat.zapyer.com.br` → `212.85.8.199`
+- Ative SSL para ambos e force HTTPS.
 
-1. **Unit Tests**: Individual component and function testing
-2. **Integration Tests**: Component interaction testing
-3. **E2E Tests**: Full user journey testing
-4. **Security Tests**: Vulnerability and penetration testing
+### Frontend (app)
 
-### 🛠️ Testing Tools
+- `npm run build`
+- Upload do conteúdo de `dist/` para o diretório do subdomínio do app (ex.: `public_html/smartchat/`).
 
-| Tool | Purpose |
-|------|---------|
-| **Jest** | Unit testing framework |
-| **React Testing Library** | Component testing |
-| **Cypress** | End-to-end testing |
-| **ESLint Security** | Static security analysis |
+### Backend (API Node)
 
-### 🏃 Running Tests
+- hPanel → “Aplicativos Node.js” com entry `server/dev-api.js`.
+- Defina variáveis de ambiente (Supabase e SMTP).
+- Domínio da aplicação: `apismartchat.zapyer.com.br`.
 
-```bash
-# Run all tests
-npm test
+### Verificação
 
-# Run tests in watch mode
-npm test:watch
-
-# Run e2e tests
-npm run test:e2e
-
-# Generate coverage report
-npm run test:coverage
-```
-
-### ✅ Test Coverage Goals
-
-- **Unit Tests**: >90% coverage
-- **Integration Tests**: >80% coverage
-- **E2E Tests**: Critical user journeys
-- **Security Tests**: All input validation and authentication flows
-
----
-
-## 🚀 Deployment
-
-### 🌐 Deployment Options
-
-#### 1. Lovable Platform (Recommended)
-
-Deploy directly from the Lovable interface:
-
-1. Click the **"Publish"** button
-2. Configure your domain settings
-3. Monitor deployment status
-4. Access your live application
-
-#### 2. Netlify Deployment
-
-```bash
-# Build the project
-npm run build
-
-# Deploy to Netlify
-netlify deploy --prod --dir=dist
-```
-
-#### 3. Vercel Deployment
-
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel --prod
-```
-
-#### 4. Custom Server Deployment
-
-```bash
-# Build for production
-npm run build
-
-# Serve static files
-npm install -g serve
-serve -s dist -l 3000
-```
+- App: `https://smartchat.zapyer.com.br`
+- API: `POST https://apismartchat.zapyer.com.br/api/register-prospect`
 
 ### 🔧 Build Configuration
 
@@ -651,406 +596,105 @@ The build process includes:
 
 ---
 
-## 📈 Performance
+## Endpoints da API
 
-### ⚡ Performance Metrics
+### Cadastro de prospect
 
-Our performance targets:
+- `POST /api/register-prospect` (`server/dev-api.js:21`)
+- Body: `{ name, email, phone, company, notes?, status? }`
+- Grava em `clients` (Supabase) e envia e-mail com `src/assets/email-smart-chat.md`.
 
-| Metric | Target | Current |
-|--------|--------|---------|
-| **First Contentful Paint** | < 1.5s | 1.2s |
-| **Largest Contentful Paint** | < 2.5s | 2.1s |
-| **Time to Interactive** | < 3.5s | 3.0s |
-| **Cumulative Layout Shift** | < 0.1 | 0.05 |
+### Assinatura da Newsletter
 
-### 🔧 Performance Optimizations
+- `POST /api/newsletter/welcome` (`server/dev-api.js:138`)
+- Body: `{ email }`
+- Busca template `src/assets/email-automatico-newsletter-zapyer-noticias.md`, formata HTML, envia com Nodemailer.
 
-#### Code Splitting
-```typescript
-// Lazy load components
-const LazyComponent = lazy(() => import('./LazyComponent'));
+### Nova Notícia para assinantes
 
-// Route-based code splitting
-const HomePage = lazy(() => import('./pages/HomePage'));
-```
+- `POST /api/newsletter/news-created` (`server/dev-api.js:296`)
+- Body: `{ slug }`
+- Obtém notícia em `news_admin`, monta e‑mail com imagem 16:9, título, resumo e botão "Leia a Notícia"; envia para assinantes ativos e registra em `newsletter_sends`.
 
-#### Image Optimization
-```typescript
-// Responsive images with lazy loading
-<img
-  src="image.webp"
-  alt="Description"
-  loading="lazy"
-  sizes="(max-width: 768px) 100vw, 50vw"
-/>
-```
+### Compartilhamento com preview
 
-#### Bundle Analysis
-```bash
-# Analyze bundle size
-npm run build:analyze
+- `GET /share/noticias/:slug` (`server/dev-api.js:64`)
+- Gera metatags OG/Twitter (imagem, título, descrição) e redireciona para `/noticias/:slug`.
 
-# Check bundle composition
-npm run bundle:stats
-```
+### Como validar os envios
+
+- Assinatura: no Hero, assine com um e‑mail válido e verifique o e‑mail de boas‑vindas.
+- Nova Notícia: publique uma notícia em `Admin → Notícias`; o envio será disparado e registrado em `newsletter_sends`.
+- Reenvio: clique em "Reenviar" na notícia publicada (lista em `Admin → Notícias`).
 
 ---
+## WhatsApp nos Planos
 
-## 🔒 Security Guidelines
+### Mensagens e número
 
-### 🛡️ Security Best Practices
-
-#### Input Validation
-- **Always validate** user input on both client and server
-- **Sanitize data** before processing or storage
-- **Use whitelist validation** rather than blacklist
-- **Implement rate limiting** for all user actions
-
-#### XSS Prevention
-```typescript
-// Use our sanitization utilities
-import { sanitizeHtml, sanitizeInput } from '@/utils/security';
-
-const cleanContent = sanitizeHtml(userInput);
-const cleanValue = sanitizeInput(formValue);
-```
-
-#### CSRF Protection
-```typescript
-// Use CSRF tokens in forms
-import { useFormSecurity } from '@/hooks/useFormSecurity';
-
-const { csrfToken } = useFormSecurity({
-  rateLimitKey: 'form-action',
-});
-```
-
-### 🔐 Authentication Security
-
-#### Session Management
-- **JWT tokens** with appropriate expiration
-- **Refresh token rotation** for extended sessions
-- **Secure cookie settings** with HttpOnly and Secure flags
-- **Session invalidation** on logout
-
-#### Password Security
-- **Minimum complexity requirements**
-- **Secure password hashing** (bcrypt with salt)
-- **Password change notifications**
-- **Account lockout** after failed attempts
-
-### 📊 Security Monitoring
-
-#### Audit Logging
-```typescript
-// Log security events
-import { logSecureError } from '@/utils/security';
-
-try {
-  // Sensitive operation
-} catch (error) {
-  logSecureError(error, 'Authentication attempt failed');
-}
-```
-
-#### Error Handling
-- **Never expose** sensitive information in errors
-- **Log security events** for monitoring
-- **Implement proper** error boundaries
-- **Use secure logging** practices
+- `PRICING_CONTACT` em `src/constants/index.ts:260-268`
+- `VITE_WHATSAPP_NUMBER` definido por ambiente
 
 ---
+## Admin
 
-## 📖 API Documentation
+### Páginas
 
-### 🌐 API Endpoints
-
-#### Authentication Endpoints
-```
-POST /api/auth/login       # User login
-POST /api/auth/logout      # User logout
-POST /api/auth/refresh     # Refresh token
-POST /api/auth/register    # User registration
-```
-
-#### Trading Endpoints
-```
-GET  /api/trading/pairs    # Get trading pairs
-GET  /api/trading/prices   # Get current prices
-POST /api/trading/order    # Place order
-GET  /api/trading/history  # Get trading history
-```
-
-#### Portfolio Endpoints
-```
-GET  /api/portfolio        # Get portfolio data
-GET  /api/portfolio/stats  # Get portfolio statistics
-GET  /api/portfolio/assets # Get asset holdings
-```
-
-### 🔐 API Security
-
-#### Request Authentication
-```typescript
-// Include JWT token in requests
-const response = await fetch('/api/endpoint', {
-  headers: {
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json',
-    'X-CSRF-Token': csrfToken,
-  },
-});
-```
-
-#### Rate Limiting
-- **Authentication**: 5 requests per minute
-- **Trading**: 10 requests per minute  
-- **Data Queries**: 60 requests per minute
-- **General API**: 100 requests per 15 minutes
+- Clientes: `src/pages/admin/Clients.tsx`
+- Tarefas: `src/pages/admin/Tasks.tsx`
+- Negócios: `src/pages/admin/Deals.tsx`
+- Integrações: `src/pages/admin/Integrations.tsx`
+- Notícias: `src/pages/admin/News.tsx`
+- Configurações: `src/pages/admin/Settings.tsx`
 
 ---
+## Solução de Problemas
 
-## 🎨 Design System
-
-### 🎯 Design Principles
-
-1. **Consistency**: Uniform components across the platform
-2. **Accessibility**: WCAG 2.1 AA compliance
-3. **Responsiveness**: Mobile-first design approach
-4. **Performance**: Optimized for fast loading
-5. **Scalability**: Easily extensible component library
-
-### 🎨 Color System
-
-#### Primary Colors
-```css
-/* Brand Colors */
---primary: 142 84% 58%;           /* Main brand green */
---primary-glow: 142 84% 70%;      /* Lighter variant */
-
-/* Gradient Definitions */
---gradient-primary: linear-gradient(135deg, 
-  hsl(var(--primary)), 
-  hsl(var(--primary-glow))
-);
-```
-
-#### Semantic Colors
-```css
-/* Status Colors */
---success: 120 100% 40%;          /* Success states */
---warning: 45 100% 60%;           /* Warning states */
---error: 0 84% 60%;               /* Error states */
---info: 210 100% 60%;             /* Information states */
-```
-
-### 📝 Typography
-
-#### Font Stack
-```css
-/* Primary Font */
-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-
-/* Monospace Font (for code/data) */
-font-family: 'JetBrains Mono', 'Fira Code', monospace;
-```
-
-#### Typography Scale
-```css
-/* Heading Sizes */
-.text-xs     { font-size: 0.75rem; }    /* 12px */
-.text-sm     { font-size: 0.875rem; }   /* 14px */
-.text-base   { font-size: 1rem; }       /* 16px */
-.text-lg     { font-size: 1.125rem; }   /* 18px */
-.text-xl     { font-size: 1.25rem; }    /* 20px */
-.text-2xl    { font-size: 1.5rem; }     /* 24px */
-.text-3xl    { font-size: 1.875rem; }   /* 30px */
-.text-4xl    { font-size: 2.25rem; }    /* 36px */
-```
-
-### 🧩 Component Library
-
-#### Button Variants
-```typescript
-// Primary button (main actions)
-<Button variant="default">Primary Action</Button>
-
-// Secondary button (secondary actions)
-<Button variant="secondary">Secondary Action</Button>
-
-// Outline button (subtle actions)
-<Button variant="outline">Outline Action</Button>
-
-// Gradient button (special CTAs)
-<Button className="button-gradient">Special Action</Button>
-```
-
-#### Card Components
-```typescript
-// Basic card
-<Card className="p-6">
-  <CardHeader>
-    <CardTitle>Card Title</CardTitle>
-  </CardHeader>
-  <CardContent>
-    Card content goes here
-  </CardContent>
-</Card>
-
-// Glass effect card
-<Card className="glass">
-  Glassmorphism effect card
-</Card>
-```
+- Tela branca no app
+  - Causa comum: uso de `process.env` no código cliente. Em Vite, use `import.meta.env`.
+  - Referência: `src/constants/index.ts:38` usa `import.meta.env.VITE_API_BASE_URL`.
+- CORS bloqueando requisições
+  - Restrinja a origem na API: configure `cors` para `https://smartchat.zapyer.com.br`.
+  - Referência: `server/dev-api.js:10-12`.
+  - Opcional: variável `ALLOWED_ORIGIN` para controlar origem permitida.
+- SSL e conteúdo misto
+  - Garanta certificado válido e redirecionamento para HTTPS nos subdomínios.
+  - Use URLs `https` em produção para `VITE_API_BASE_URL`.
+- Erros Supabase (auth/admin)
+  - Confirme `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` no hPanel.
+  - Referência: `server/dev-api.js:14-19` (criação do cliente Supabase).
+- ECONNREFUSED na API
+  - Verifique se a API Node está rodando e o DNS aponta para o IP correto.
+  - O formulário CTA tem fallback para API direta.
+  - Referência: `src/components/cta/MultiStepCTA.tsx:109-132`.
+- E-mail não entregue
+  - Configure `GMAIL_USER` e `GMAIL_APP_PASSWORD` (senha de app do Gmail).
+  - Referência: `server/dev-api.js:46-55` (transporter nodemailer).
 
 ---
+## Checklist Pós-Deploy
 
-## 🤝 Contributing
-
-We welcome contributions from the community! Here's how you can help:
-
-### 🚀 Getting Started
-
-1. **Fork the repository**
-2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. **Make your changes**: Follow our coding standards
-4. **Add tests**: Ensure your code is well-tested
-5. **Submit a pull request**: Describe your changes
-
-### 📋 Contribution Guidelines
-
-#### Code Quality
-- **Follow TypeScript best practices**
-- **Write comprehensive tests**
-- **Include proper documentation**
-- **Follow our security guidelines**
-- **Maintain backward compatibility**
-
-#### Commit Messages
-```
-feat: add new trading indicator component
-fix: resolve chart rendering issue on mobile
-docs: update API documentation
-style: improve button component accessibility
-test: add unit tests for validation utilities
-```
-
-#### Pull Request Process
-1. **Update documentation** for any new features
-2. **Add tests** for new functionality
-3. **Follow security review** process
-4. **Get code review** from maintainers
-5. **Ensure CI passes** all checks
-
-### 🐛 Bug Reports
-
-When reporting bugs, please include:
-- **Detailed description** of the issue
-- **Steps to reproduce** the problem
-- **Expected vs actual** behavior
-- **Screenshots or videos** if applicable
-- **Browser and device** information
-
-### 💡 Feature Requests
-
-For new features, please provide:
-- **Use case description**
-- **Proposed implementation**
-- **Potential impact** on existing features
-- **Alternative solutions** considered
+- DNS:
+  - `smartchat.zapyer.com.br` e `apismartchat.zapyer.com.br` apontando para `212.85.8.199`.
+  - SSL emitido e redirecionamento para HTTPS ativo.
+- Frontend:
+  - `VITE_API_BASE_URL` e `VITE_WHATSAPP_NUMBER` definidos.
+  - Build realizado (`npm run build`) e `dist/` publicado no subdomínio.
+- Backend:
+  - Aplicativo Node configurado no hPanel com entry `server/dev-api.js`.
+  - Variáveis (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `GMAIL_USER`, `GMAIL_APP_PASSWORD`) definidas.
+  - Teste `POST /api/register-prospect` retornando sucesso.
+- Funcionalidades:
+  - CTA cadastra prospect em `clients` (Supabase) e envia e-mail.
+  - Botões de planos abrem WhatsApp com mensagens corretas.
+  - CORS restrito para o domínio do app.
 
 ---
+## Licença
 
-## 📞 Support & Community
+Zapyer © Todos os direitos reservados.
 
-### 💬 Getting Help
 
-- **Documentation**: Check our comprehensive docs
-- **GitHub Issues**: Report bugs and request features
-- **Community Discord**: Join our developer community
-- **Email Support**: contact@cryptotrade.com
-
-### 🌟 Community Resources
-
-- **Developer Blog**: Latest updates and tutorials
-- **YouTube Channel**: Video tutorials and demos
-- **Twitter**: Follow for announcements
-- **LinkedIn**: Professional updates and insights
-
-### 📧 Contact Information
-
-- **General Inquiries**: info@cryptotrade.com
-- **Technical Support**: support@cryptotrade.com
-- **Security Issues**: security@cryptotrade.com
-- **Business Partnerships**: partnerships@cryptotrade.com
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-### 📋 License Summary
-
-- **✅ Commercial use**
-- **✅ Modification**
-- **✅ Distribution**
-- **✅ Private use**
-- **❌ Liability**
-- **❌ Warranty**
-
----
-
-## 🙏 Acknowledgments
-
-### 👨‍💻 Development Team
-
-- **Lead Developer**: CryptoTrade Development Team
-- **UI/UX Design**: Design Team
-- **Security Consultant**: Security Team
-- **DevOps Engineer**: Infrastructure Team
-
-### 🛠️ Technologies Used
-
-Special thanks to the creators and maintainers of:
-
-- **React Team** - For the amazing React library
-- **Vercel Team** - For Next.js and deployment platform
-- **Tailwind CSS Team** - For the utility-first CSS framework
-- **Radix UI Team** - For accessible component primitives
-- **Framer Team** - For the powerful animation library
-
-### 🌟 Open Source Community
-
-This project wouldn't be possible without the incredible open source community. Thank you to all contributors and maintainers of the libraries and tools we use.
-
----
-
-<div align="center">
-
-**Made with ❤️ by the CryptoTrade Team**
-
-[🔗 Website](https://cryptotrade.lovable.app) • [📧 Email](mailto:contact@cryptotrade.com) • [🐦 Twitter](https://twitter.com/cryptotrade) • [💼 LinkedIn](https://linkedin.com/company/cryptotrade)
-
-</div>
-
----
-
-## 📊 Project Metrics
-
-### 📈 Current Status
-
-- **Version**: 1.0.0
-- **Build Status**: ✅ Passing
-- **Test Coverage**: 85%
-- **Security Score**: A+
-- **Performance Score**: 95/100
-- **Accessibility Score**: 98/100
-
-### 📅 Development Timeline
-
-- **Q4 2022**: Project inception and planning
 - **Q1-Q2 2023**: Core platform development
 - **Q3 2023**: Advanced features and AI integration
 - **Q4 2023**: Beta testing and security audit

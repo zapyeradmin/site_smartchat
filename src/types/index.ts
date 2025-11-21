@@ -1,12 +1,12 @@
 /**
  * ============================================================================
- * CRYPTO TRADING PLATFORM - TYPE DEFINITIONS
+ * SITE SMART CHAT - TYPE DEFINITIONS
  * ============================================================================
  * 
  * This file contains all TypeScript interfaces and types used across the 
  * application to ensure type safety and better development experience.
  * 
- * @author CryptoTrade Development Team
+ * @author Zapyer Team
  * @version 1.0.0
  * @created 2024
  * ============================================================================

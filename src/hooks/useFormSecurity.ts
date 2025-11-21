@@ -1,12 +1,12 @@
 /**
  * ============================================================================
- * CRYPTO TRADING PLATFORM - FORM SECURITY HOOK
+ * SITE SMART CHAT - FORM SECURITY HOOK
  * ============================================================================
  * 
  * Custom React hook for form security including CSRF protection,
  * rate limiting, input sanitization, and validation.
  * 
- * @author CryptoTrade Development Team
+ * @author Zapyer Team
  * @version 1.0.0
  * @created 2024
  * ============================================================================

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Eye, Trash2, Calendar, User, FileText } from 'lucide-react';
+import { Plus, Edit, Eye, Trash2, Calendar, User, FileText, SendHorizonal } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -128,6 +128,16 @@ const News = () => {
           title: "Sucesso",
           description: "Notícia atualizada com sucesso!",
         });
+        if (newsData.status === 'published') {
+          try {
+            const apiBase = import.meta.env.VITE_API_BASE_URL || ''
+            await fetch(`${apiBase}/api/newsletter/news-created`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ slug: newsData.slug })
+            })
+          } catch {}
+        }
       } else {
         const { error } = await supabase
           .from('news_admin')
@@ -139,6 +149,16 @@ const News = () => {
           title: "Sucesso",
           description: "Notícia criada com sucesso!",
         });
+        if (newsData.status === 'published') {
+          try {
+            const apiBase = import.meta.env.VITE_API_BASE_URL || ''
+            await fetch(`${apiBase}/api/newsletter/news-created`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ slug: newsData.slug })
+            })
+          } catch {}
+        }
       }
 
       fetchNews();
@@ -237,6 +257,20 @@ const News = () => {
         return 'bg-primary/20 text-primary border-primary/30';
     }
   };
+
+  const resendNewsletter = async (slug: string) => {
+    try {
+      const apiBase = import.meta.env.VITE_API_BASE_URL || ''
+      await fetch(`${apiBase}/api/newsletter/news-created`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug })
+      })
+      toast({ title: 'Reenvio iniciado', description: 'Email de nova notícia está sendo reenviado.' })
+    } catch (e) {
+      toast({ title: 'Erro ao reenviar', description: 'Não foi possível reenviar o email.', variant: 'destructive' })
+    }
+  }
 
   const filteredNews = news.filter(article => {
     const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -483,6 +517,17 @@ const News = () => {
                         <Edit className="h-4 w-4 mr-1" />
                         Editar
                       </Button>
+                      {article.status === 'published' && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="hover:bg-indigo-50 text-indigo-600"
+                          onClick={() => resendNewsletter(article.slug)}
+                        >
+                          <SendHorizonal className="h-4 w-4 mr-1" />
+                          Reenviar
+                        </Button>
+                      )}
                       <Button
                         variant="outline"
                         size="sm"

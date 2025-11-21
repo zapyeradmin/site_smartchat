@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/expandable-chat"
 import { ChatMessageList } from "@/components/ui/chat-message-list"
 
-export function CryptoTradingChat() {
+export function SmartChatAssistant() {
   const [messages, setMessages] = useState([
     {
       id: 1,

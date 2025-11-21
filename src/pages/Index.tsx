@@ -1,13 +1,13 @@
 /**
  * ============================================================================
- * CRYPTO TRADING PLATFORM - MAIN INDEX PAGE
+ * SITE SMART CHAT - MAIN INDEX PAGE
  * ============================================================================
  * 
  * This is the main landing page component that orchestrates all sections
- * of the crypto trading platform including hero, features, pricing, 
+ * of the Smart Chat platform including hero, features, pricing,
  * testimonials, and more.
  * 
- * @author CryptoTrade Development Team
+ * @author Zapyer Team
  * @version 1.0.0
  * @created 2024
  * 
@@ -29,7 +29,7 @@ import { FeaturesSection } from "@/components/features/FeaturesSection";
 import { PricingSection } from "@/components/pricing/PricingSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import Footer from "@/components/Footer";
-import { CryptoTradingChat } from "@/components/CryptoTradingChat";
+import { SmartChatAssistant } from "@/components/SmartChatAssistant";
 import { VideoPlayer } from "@/components/ui/video-thumbnail-player";
 import FAQSection from "@/components/FAQSection";
 import { NewsSection } from "@/components/news/NewsSection";
@@ -40,6 +40,9 @@ import MultiStepCTA from "@/components/cta/MultiStepCTA";
 import flowbuilderImage from "@/assets/smart-chat-flowbuilder.jpg";
 import databaseImage from "@/assets/smart-chat-data-base.jpg";
 import tecnologiaImage from "@/assets/smart-chat-tecnologia.jpg";
+import thumbnailYoutube1 from "@/assets/thumbnail-youtube1.jpg";
+import thumbnailYoutube2 from "@/assets/thumbnail-youtube-2.jpg";
+import thumbnailYoutube3 from "@/assets/thumbnail-youtube-3.jpg";
 
 /**
  * ============================================================================
@@ -170,10 +173,10 @@ const Index = (): JSX.Element => {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <VideoPlayer
-              thumbnailUrl="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop"
+              thumbnailUrl={thumbnailYoutube1}
               videoUrl="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-              title="Dashboard de Alta Performance"
-              description="Conheça todas as funcionalidades do nosso painel"
+              title=""
+              description=""
               className="rounded-xl"
             />
           </motion.div>
@@ -184,10 +187,10 @@ const Index = (): JSX.Element => {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <VideoPlayer
-              thumbnailUrl="https://images.unsplash.com/photo-1642790106117-e829e14a795f?q=80&w=2084&auto=format&fit=crop"
+              thumbnailUrl={thumbnailYoutube2}
               videoUrl="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-              title="Apresentação do Smart Chat"
-              description="Conheça nossa Ferramanta de Multiatendimento"
+              title=""
+              description=""
               className="rounded-xl"
             />
           </motion.div>
@@ -198,10 +201,10 @@ const Index = (): JSX.Element => {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <VideoPlayer
-              thumbnailUrl="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2128&auto=format&fit=crop"
+              thumbnailUrl={thumbnailYoutube3}
               videoUrl="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-              title="Ferramentas do Smart Chat"
-              description="Conheça todas as funcionalidades do Smart Chat"
+              title=""
+              description=""
               className="rounded-xl"
             />
           </motion.div>
@@ -263,8 +266,8 @@ const Index = (): JSX.Element => {
         <Footer />
       </div>
 
-      {/* Crypto Trading Chat */}
-      <CryptoTradingChat />
+      {/* Smart Chat Assistant */}
+      <SmartChatAssistant />
     </div>
   );
 };

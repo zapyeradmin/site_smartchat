@@ -1,12 +1,12 @@
 /**
  * ============================================================================
- * CRYPTO TRADING PLATFORM - SECURITY UTILITIES
+ * SITE SMART CHAT - SECURITY UTILITIES
  * ============================================================================
  * 
  * This file contains security-related utilities for input sanitization,
  * XSS prevention, CSRF protection, and other security measures.
  * 
- * @author CryptoTrade Development Team
+ * @author Zapyer Team
  * @version 1.0.0
  * @created 2024
  * ============================================================================
